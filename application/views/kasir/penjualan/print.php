@@ -19,6 +19,7 @@
                                 <img src="<?= base_url('assets/img/logo hitam.png') ?>" style="width: 200px;" class="mb-4">
                             </div>
                             <p class="text-center"><?= $transaksi[0]->id_transaksi; ?> | <?= $transaksi[0]->nama_user; ?></p>
+                            <p class="text-center"><?= 'Tanggal transaksi : ' . $transaksi[0]->tanggal; ?></p>
                             <hr>
                             <table class="table">
                                 <thead>
@@ -52,6 +53,8 @@
                                 <h5><b>Kembalian :</b></h5>
                                 <h5><b><?= $kembalian; ?></b></h5>
                             </div>
+                            <hr>
+                            <h5 class="text-center">TERIMAKASIH</h5>
                         </div>
                     </div>
                 </div>

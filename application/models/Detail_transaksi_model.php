@@ -37,6 +37,7 @@ class Detail_transaksi_model extends CI_Model {
         $this->db->select('*');
         $this->db->from($this->table);
         $this->db->join('tb_barang', 'tb_detail_transaksi.id_barang = tb_barang.id_barang', 'left');
+        $this->db->join('tb_kategori', 'tb_barang.kategori = tb_kategori.id_kategori', 'left');
         $this->db->where($this->table . '.id_transaksi', $id_transaksi);
         $query = $this->db->get();
         return $query->result();

@@ -48,121 +48,16 @@
 	                </h6>
 	            <?php endif ?> 
 				<div class="row mt-1 pt-0 px-1" style="overflow-y: auto; max-height: 80vh; border-radius: 5px; white-space: nowrap;">
-					<div class="card">
+					<div class="card" data-aos="fade-right">
 						<div class="card-body d-flex justify-content-between pt-4">
 							<h4>Data barang</h4>
 							<div>
 								<button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#kategori" data-aos="fade-right" data-aos-delay="100">
 								  Kategori
 								</button>
-								<div class="modal fade" id="kategori" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-								  <div class="modal-dialog modal-lg">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h1 class="modal-title fs-5" id="staticBackdropLabel">Kategori Barang</h1>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								      <div class="modal-body">
-								        <div class="row">
-								        	<div class="col-lg-5">
-								        		<div class="card">
-								        			<div class="card-body pt-3">
-								        				<table class="table">
-								        					<tbody>
-								        						<?php foreach ($kategori_barang as $kategori): ?>
-								        							<tr>
-								        								<td class="d-flex justify-content-between">
-								        									<b><?= $kategori->kategori; ?></b>
-								        									<div>
-									        									<button class="btn btn-outline-success" data-bs-target="#<?= $kategori->id_kategori; ?>" data-bs-toggle="modal" ><i class="ri-ball-pen-fill"></i></button>
-									        									<a href="<?= site_url('admin/barang/hapus_kategori/' . $kategori->id_kategori) ?>" class="btn btn-outline-danger" onclick="return confirm('Yakin akan menghapus kategori barang?')"><i class="ri-delete-bin-7-fill"></i></a>
-								        									</div>
-								        								</td>
-								        							</tr>
-								        						<?php endforeach ?>
-								        					</tbody>
-								        				</table>
-								        			</div>
-								        		</div>
-								        	</div>
-								        	<div class="col-lg-7">
-								        		<div class="card">
-								        			<div class="card-body pt-3">
-								        				<h5>Tambah kategori</h5>
-								        				<form action="<?= site_url('admin/barang/tambah_kategori') ?>" method="POST">
-								        					<input type="text" name="kategori" required class="form-control mb-3" placeholder="Kategori baru">
-								        					<div class="d-flex justify-content-end">
-									        					<button type="submit" class="btn btn-primary">Tambahkan</button>
-								        					</div>
-								        				</form>
-								        			</div>
-								        		</div>
-								        	</div>
-								        </div>
-								      </div>
-								      <div class="modal-footer">
-								      </div>
-								    </div>
-								  </div>
-								</div>
 								<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#barang" data-aos="fade-right" data-aos-delay="50">
 									Tambah barang
 								</button>
-								<div class="modal fade" id="barang"data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-								  <div class="modal-dialog">
-								    <div class="modal-content">
-								      <div class="modal-header">
-								        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Barang</h1>
-								        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								      </div>
-								      <div class="modal-body">
-								        <div class="row">
-								            <div class="col-lg-10">
-								                <div class="card">
-								                    <div class="card-body pt-4">
-								                    	<h5 class="mb-3">Isikan Data Barang</h5>
-								                        <form action="<?= site_url('admin/barang/tambah') ?>" method="POST" enctype="multipart/form-data">
-								                            <input type="text" name="id_barang" placeholder="Kode Barang" class="form-control mb-3">
-								                            <input type="text" name="nama" placeholder="Nama barang" class="form-control mb-3" required>
-								                            <div class="row">
-								                                <div class="col-lg-6">
-								                                    <input type="number" name="harga_beli" placeholder="Harga beli" class="form-control mb-3" required>
-								                                </div>
-								                                <div class="col-lg-6">
-								                                    <input type="number" name="harga" placeholder="Harga jual" class="form-control mb-3" required>
-								                                </div>
-								                            </div>                          
-								                            <input type="number" name="stok" placeholder="Stok" class="form-control mb-3" required>
-								                            <select name="kategori" class="form-control mb-3" required>
-								                                <option>--Pilih Kategori--</option>
-								                                <?php foreach ($kategori_barang as $kategori) : ?>
-								                                    <option value="<?= $kategori->id_kategori; ?>"><?= $kategori->kategori; ?></option>
-								                                <?php endforeach ?>
-								                            </select>
-								                            <input type="file" name="thumbnail" class="form-control mb-3" required accept=".png, .jpg, .jpeg" onchange="previewImage(event)">
-								                            <div class="d-flex justify-content-end">
-								                                <button class="btn btn-primary" type="submit">
-								                                    Tambahkan
-								                                </button>
-								                            </div>
-								                        </form>
-								                    </div>
-								                </div>
-								            </div>
-								            <div class="col-auto">
-								            	<div class="card">
-								            		<div class="card-body pt-4" id="image-preview-container">
-								            			<img id="image-preview" src="#" style="max-width: 100%; max-height: 150px;">
-								            		</div>
-								            	</div>
-								            </div>
-								        </div>
-								      </div>
-								      <div class="modal-footer">
-								      </div>
-								    </div>
-								  </div>
-								</div>
 							</div>
 						</div>
 						<?php if ($barang_barang): ?>							
@@ -239,7 +134,7 @@
 <?php endforeach ?>
 <?php foreach ($barang_barang as $barang): ?>
 	<div class="modal fade" id="<?= $barang->id_barang; ?>"data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	  <div class="modal-dialog">
+	  <div class="modal-dialog modal-lg">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <h1 class="modal-title fs-5" id="staticBackdropLabel">Edit <?= $barang->nama; ?></h1>
@@ -250,6 +145,9 @@
 	            <div class="col-lg-10">
 	                <div class="card">
 	                    <div class="card-body pt-4">
+		                	<div class="d-flex justify-content-center">
+			                	<img src="<?= base_url('upload/barang/' . $barang->thumbnail) ?>" style="width: 100px;">
+		                	</div>
 	                        <form action="<?= site_url('admin/barang/edit/' . $barang->id_barang) ?>" method="POST" enctype="multipart/form-data">
 	                            <label>Nama Barang</label>
 	                            <input type="text" name="nama" placeholder="Nama barang" class="form-control mb-3" required value="<?= html_escape($barang->nama) ?>">
@@ -265,6 +163,7 @@
 	                            </div> 
 	                            <label>Stok</label>                         
 	                            <input type="number" name="stok" placeholder="Stok" class="form-control mb-3" disabled value="<?= html_escape($barang->stok) ?>">
+	                            <label>Kategori</label>                         
 	                            <select name="kategori" class="form-control mb-3" required>
 	                                <option>--Pilih Kategori--</option>
 	                                <?php foreach ($kategori_barang as $kategori) : ?>
@@ -298,7 +197,111 @@
 	</div>
 	
 <?php endforeach ?>
+<div class="modal fade" id="kategori" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Kategori Barang</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+        	<div class="col-lg-5">
+        		<div class="card">
+        			<div class="card-body pt-3">
+        				<table class="table">
+        					<tbody>
+        						<?php foreach ($kategori_barang as $kategori): ?>
+        							<tr>
+        								<td class="d-flex justify-content-between">
+        									<b><?= $kategori->kategori; ?></b>
+        									<div>
+	        									<button class="btn btn-outline-success" data-bs-target="#<?= $kategori->id_kategori; ?>" data-bs-toggle="modal" ><i class="ri-ball-pen-fill"></i></button>
+	        									<a href="<?= site_url('admin/barang/hapus_kategori/' . $kategori->id_kategori) ?>" class="btn btn-outline-danger" onclick="return confirm('Yakin akan menghapus kategori barang?')"><i class="ri-delete-bin-7-fill"></i></a>
+        									</div>
+        								</td>
+        							</tr>
+        						<?php endforeach ?>
+        					</tbody>
+        				</table>
+        			</div>
+        		</div>
+        	</div>
+        	<div class="col-lg-7">
+        		<div class="card">
+        			<div class="card-body pt-3">
+        				<h5>Tambah kategori</h5>
+        				<form action="<?= site_url('admin/barang/tambah_kategori') ?>" method="POST">
+        					<input type="text" name="kategori" required class="form-control mb-3" placeholder="Kategori baru">
+        					<div class="d-flex justify-content-end">
+	        					<button type="submit" class="btn btn-primary">Tambahkan</button>
+        					</div>
+        				</form>
+        			</div>
+        		</div>
+        	</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="modal fade" id="barang"data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Tambah Barang</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-lg-10">
+                <div class="card">
+                    <div class="card-body pt-4">
+                    	<h5 class="mb-3">Isikan Data Barang</h5>
+                        <form action="<?= site_url('admin/barang/tambah') ?>" method="POST" enctype="multipart/form-data">
+                            <input type="text" name="id_barang" placeholder="Kode Barang" class="form-control mb-3">
+                            <input type="text" name="nama" placeholder="Nama barang" class="form-control mb-3" required>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input type="number" name="harga_beli" placeholder="Harga beli" class="form-control mb-3" required>
+                                </div>
+                                <div class="col-lg-6">
+                                    <input type="number" name="harga" placeholder="Harga jual" class="form-control mb-3" required>
+                                </div>
+                            </div>                          
+                            <select name="kategori" class="form-control mb-3" required>
+                                <option>--Pilih Kategori--</option>
+                                <?php foreach ($kategori_barang as $kategori) : ?>
+                                    <option value="<?= $kategori->id_kategori; ?>"><?= $kategori->kategori; ?></option>
+                                <?php endforeach ?>
+                            </select>
+                            <input type="file" name="thumbnail" class="form-control mb-3" required accept=".png, .jpg, .jpeg" onchange="previewImage(event)">
+                            <div class="d-flex justify-content-end">
+                                <button class="btn btn-primary" type="submit">
+                                    Tambahkan
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+            	<div class="card">
+            		<div class="card-body pt-4" id="image-preview-container">
+            			<img id="image-preview" src="#" style="max-width: 100%; max-height: 150px;">
+            		</div>
+            	</div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
 <!-- Tambahkan script untuk preview gambar -->
 <script>
     function previewImage(event) {

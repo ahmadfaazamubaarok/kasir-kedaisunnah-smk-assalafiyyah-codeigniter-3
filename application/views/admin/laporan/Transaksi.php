@@ -130,7 +130,7 @@
 				       <div class="modal-dialog modal-dialog-centered modal-lg">
 				           <div class="modal-content">
 				               <div class="modal-header">
-				                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Transaksi <?= $laporan['transaksi']->id_transaksi; ?></h1>
+				                   <h1 class="modal-title fs-5" id="staticBackdropLabel">Detail Transaksi <b><?= $laporan['transaksi']->id_transaksi; ?></b></h1>
 				                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				               </div>
 				               <div class="modal-body">
@@ -175,11 +175,11 @@
 			    			<h5 class="card-title">Filter laporan penjualan</h5>
 	    					<div class="mb-3">
 	    						<label class="form-label">Dari :</label>
-	    						<input type="date" name="waktu_awal" class="form-control">
+	    						<input type="date" name="waktu_awal" class="form-control" required>
 	    					</div>
 	    					<div class="mb-3">
 	    						<label class="form-label">Sampai :</label>
-	    						<input type="date" name="waktu_akhir" class="form-control">
+	    						<input type="date" name="waktu_akhir" class="form-control" required>
 	    					</div>
 	    				</div>
     					<div class="d-flex justify-content-end card-body">

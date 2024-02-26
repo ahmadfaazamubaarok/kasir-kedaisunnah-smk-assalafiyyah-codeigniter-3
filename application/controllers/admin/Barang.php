@@ -54,7 +54,6 @@ class Barang extends CI_Controller {
 	            $nama = $this->input->post('nama');
 				$harga_beli = $this->input->post('harga_beli');
 				$harga = $this->input->post('harga');
-				$stok = $this->input->post('stok');
 				$kategori = $this->input->post('kategori');
 	            $thumbnail = $upload_data['file_name'];
 	            $barang = [
@@ -62,7 +61,7 @@ class Barang extends CI_Controller {
 	            	'nama'		=> $nama,
 	            	'harga_beli'=> $harga_beli,
 	            	'harga'		=> $harga,
-	            	'stok'		=> $stok,
+	            	'stok'		=> 0,
 	            	'kategori'	=> $kategori,
 	            	'thumbnail'	=> $thumbnail
 	            ];

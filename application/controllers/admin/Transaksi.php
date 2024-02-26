@@ -138,7 +138,7 @@ class Transaksi extends CI_Controller
 		$object = new PHPExcel();
 
 		$object->getProperties()->setCreator("Kedaisunnah");
-		$object->getProperties()->setLAstModifiedBy("Kedaisunnah");
+		$object->getProperties()->setLastModifiedBy("Kedaisunnah");
 		$object->getProperties()->setTitle("Data Transaksi");
 
 		$object->setActiveSheetIndex(0);

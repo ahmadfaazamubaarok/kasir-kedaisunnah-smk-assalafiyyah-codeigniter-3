@@ -14,6 +14,15 @@
 			            </p>
 					</div>
 				<?php endif ?>
+				<?php if ($this->session->flashdata('update_stok')): ?>
+				<div class="row">
+					<div class="col-12">
+						<p class="alert alert-success alert-dismissible fade show text-center" role="alert">
+			                   <?= $this->session->flashdata('update_stok'); ?>
+				   			<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+			            </p>
+					</div>
+				<?php endif ?>
 				<?php if ($this->session->flashdata('tambah_supplier')): ?>
 				<div class="row">
 					<div class="col-12">
@@ -83,7 +92,7 @@
 									<th>Tambahan</th>
 									<th>Pengeluaran</th>
 									<th>Tanggal</th>
-									<th>Keterangan</th>
+									<th>Aksi</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -96,6 +105,7 @@
 										<td><?= $s->pengeluaran; ?></td>
 										<td><?= $s->tanggal; ?></td>
 										<td>
+											<button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#edit<?= $s->id_stok; ?>">Edit</button>
 											<button class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#detailStok<?= $s->id_stok; ?>">Detail</button>
 										</td>
 									</tr>
@@ -131,7 +141,7 @@
         				<td><?= $sup->nama_supplier?></td>
         				<td><?= $sup->no_hp?></td>
         				<td><?= $sup->alamat?></td>
-        				<td>
+        				<td class="d-flex justify-content-center align-items-center">
         					<button class="btn btn-outline-success" data-bs-target="#editSupplier" data-bs-toggle="modal">Edit</button>
         					<a href="<?= site_url('admin/stok/hapus_supplier/' . $sup->id_supplier) ?>" class="btn btn-outline-danger" onclick="return confirm('Apakah yakin akan menghapus supplier ini?')">Hapus</a>
         				</td>
@@ -204,29 +214,29 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-				<form action="" method="POST">
-					<label>Barang</label>
-					<select class="form-control mb-3" name="id_barang" required>
-						<?php foreach ($barang as $b): ?>
-							<option value="<?= $b->id_barang; ?>"><?= $b->nama; ?> ( Stok: <?= $b->stok; ?> )</option>
-						<?php endforeach ?>
-					</select>
-					<label>Tambahan</label>
-					<input type="number" name="tambahan" class="form-control mb-3" required>
-					<label>Supplier</label>
-					<select class="form-control mb-3" name="id_supplier" required>
-						<?php foreach ($supplier as $s): ?>
-							<option value="<?= $s->id_supplier; ?>"><?= $s->nama_supplier; ?></option>
-						<?php endforeach ?>
-					</select>
-					<label>Pengeluaran</label>
-					<input type="number" name="pengeluaran" class="form-control mb-3" required>
-					<label>Keterangan</label>
-					<textarea name="keterangan" class="form-control mb-3" placeholder="Tidak ada keterangan..."></textarea>
-					<div class="text-end">
-						<button type="submit" class="btn btn-primary">Tambahkan</button>
-					</div>
-				</form>
+							<form action="" method="POST">
+								<label>Barang</label>
+								<select class="form-control mb-3" name="id_barang" required>
+									<?php foreach ($barang as $b): ?>
+										<option value="<?= $b->id_barang; ?>"><?= $b->nama; ?> ( Stok: <?= $b->stok; ?> )</option>
+									<?php endforeach ?>
+								</select>
+								<label>Tambahan</label>
+								<input type="number" name="tambahan" class="form-control mb-3" required>
+								<label>Supplier</label>
+								<select class="form-control mb-3" name="id_supplier" required>
+									<?php foreach ($supplier as $s): ?>
+										<option value="<?= $s->id_supplier; ?>"><?= $s->nama_supplier; ?></option>
+									<?php endforeach ?>
+								</select>
+								<label>Pengeluaran</label>
+								<input type="number" name="pengeluaran" class="form-control mb-3" required>
+								<label>Keterangan</label>
+								<textarea name="keterangan" class="form-control mb-3" placeholder="Tidak ada keterangan..."></textarea>
+								<div class="text-end">
+									<button type="submit" class="btn btn-primary">Tambahkan</button>
+								</div>
+							</form>
             </div>
             <div class="modal-footer">
             	
@@ -237,7 +247,7 @@
 <?php foreach ($stok as $s): ?>
 	<!-- Modal -->
 	<div class="modal fade" id="detailStok<?= $s->id_stok; ?>" aria-hidden="true">
-	    <div class="modal-dialog modal-dialog-centered modal-lg">
+	    <div class="modal-dialog modal-dialog-centered">
 	        <div class="modal-content">
 	            <div class="modal-header">
 	                <h1 class="modal-title fs-5" id="staticBackdropLabel">Keterangan <strong><?= $s->id_stok; ?></strong></h1>
@@ -256,7 +266,48 @@
 	        </div>
 	    </div>
 	</div>
-	
+<?php endforeach ?>
+
+<?php foreach ($stok as $s): ?>
+	<div class="modal fade" id="edit<?= $s->id_stok; ?>" aria-hidden="true">
+	    <div class="modal-dialog modal-dialog-centered">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <h1 class="modal-title fs-5">Ubah riwayat <strong><?= $s->id_stok; ?></strong></h1>
+	                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	            </div>
+	            <div class="modal-body">
+	                <form action="<?= site_url('admin/stok/edit_riwayat/' . $s->id_stok) ?>" method="POST">
+	                	<label>Barang</label>
+										<select class="form-control mb-3" name="id_barang" required>
+											<?php foreach ($barang as $b): ?>
+												<option value="<?= $b->id_barang; ?>" <?php if ($s->id_barang === $b->id_barang){echo "selected";} ?>><?= $b->nama; ?> ( Stok: <?= $b->stok; ?> )</option>
+											<?php endforeach ?>
+										</select>
+										<label>Tambahan</label>
+										<input type="number" name="tambahan" class="form-control mb-3" required value="<?= htmlentities($s->tambahan) ?>">
+										<label>Supplier</label>
+										<select class="form-control mb-3" name="id_supplier" required>
+											<?php foreach ($supplier as $sup): ?>
+												<option value="<?= $s->id_supplier; ?>" <?php if ($s->id_supplier === $sup->id_supplier){echo "selected";} ?>><?= $sup->nama_supplier; ?></option>
+											<?php endforeach ?>
+										</select>
+										<label>Pengeluaran</label>
+										<input type="number" name="pengeluaran" class="form-control mb-3" required value="<?= htmlentities($s->pengeluaran) ?>">
+										<label>Tanggal</label>
+										<input type="date" name="tanggal" class="form-control mb-3" required>
+										<label>Keterangan</label>
+										<textarea name="keterangan" class="form-control mb-3" placeholder="Tidak ada keterangan..."><?= htmlentities($s->keterangan) ?></textarea>
+										<div class="text-end">
+											<button type="submit" class="btn btn-success">Ubah</button>
+										</div>
+	                </form>
+	            </div>
+	            <div class="modal-footer">
+	            </div>
+	        </div>
+	    </div>
+	</div>
 <?php endforeach ?>
 <?php $this->load->view('admin/template/end'); ?>
 

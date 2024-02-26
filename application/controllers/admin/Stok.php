@@ -44,7 +44,7 @@ class Stok extends CI_Controller {
 				'stok'		=> $stok_baru
 			];
 
-			$updated = $this->barang_model->update($barang);
+			$this->barang_model->update($barang);
 
 			$stok = [
 				'id_stok' 		=> 'ST' . date('y'.'m'.'d'.'h'.'i'.'s'),
@@ -56,17 +56,10 @@ class Stok extends CI_Controller {
 				'tanggal'		=> date('Y-m-d H:i:s')
 			];
 
-			$inserted = $this->stok_model->insert($stok);
+			$this->stok_model->insert($stok);
 
-			if ($updated && $inserted) {
-				echo "string";
-				die();
-				$this->session->set_flashdata('berhasil','Berhasil menambahkan <strong>' . $tambahan . '</strong> stok untuk <strong>' . $barang_akan_update . '</strong>');
-				redirect('admin/stok');
-			} else {
-				$this->session->set_flashdata('gagal','Gagal menambahkan!');
-				redirect('admin/stok');
-			}
+			$this->session->set_flashdata('berhasil','Berhasil menambahkan <strong>' . $tambahan . '</strong> stok untuk <strong>' . $barang_akan_update->nama . '</strong>');
+			redirect('admin/stok');
 		}
 
 		$this->load->view('admin/stok/stok', $data);
@@ -111,6 +104,33 @@ class Stok extends CI_Controller {
 	{
 		$this->supplier_model->delete($id_supplier);
 		$this->session->set_flashdata('hapus_supplier', 'Berhasil menghapus supplier!');
+		redirect('admin/stok');
+	}
+
+	public function edit_riwayat($id_stok)
+	{
+		$stok = [
+			'id_stok'    => $id_stok,
+			'id_barang'  => $this->input->post('id_barang'),
+			'id_supplier'=> $this->input->post('id_supplier'),
+			'tambahan'   => $this->input->post('tambahan'),
+			'pengeluaran'=> $this->input->post('pengeluaran'),
+			'keterangan' => $this->input->post('keterangan'),
+			'tanggal'    => $this->input->post('tanggal'),
+			'edit'       => 'sudah'
+		];
+		$this->stok_model->update($stok);
+
+		$id_barang = $this->input->post('id_barang');
+
+		$barang = [
+			'id_barang' => $id_barang,
+			'stok'      => $this->input->post('tambahan')
+		];
+
+		$this->barang_model->update($barang);
+
+		$this->session->set_flashdata('update_stok','Berhasil mengubah riwayat stok <strong>' . $id_stok . '</strong>!');
 		redirect('admin/stok');
 	}
 }

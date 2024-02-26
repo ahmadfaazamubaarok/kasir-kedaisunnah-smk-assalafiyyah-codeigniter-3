@@ -85,7 +85,7 @@
                 </div>
                 <div class="row mt-1 pt-3 px-1" style="overflow-y: auto; max-height: 80vh; border-radius: 5px;">
                     <?php foreach($barang_barang as $barang) : ?>
-                        <div class="col-lg-3 mx-0">
+                        <div class="col-sm-3 mx-0">
                             <form action="" method="POST">
                                 <input type="hidden" value="<?= $barang->id_barang; ?>" name="id_barang">
                                 <button type="submit" class="btn">
@@ -121,10 +121,16 @@
                                         <tr>
                                             <td><?= $pesan['nama']; ?></td>
                                             <td class="text-end"><?= number_format($pesan['subtotal']); ?></td>
-                                            <td class="text-end">
-                                                <a href="<?= site_url('kasir/penjualan/kurang_pesanan/' . $pesan['id_barang']) ?>" class="btn btn-outline-secondary mx-1">-</a>
+                                            <td class="d-flex justify-content-end">
+                                                <form action="<?= site_url('kasir/penjualan/kurang_pesanan') ?>" method="POST">
+                                                    <input type="hidden" name="id_barang" value="<?= $pesan['id_barang']; ?>">
+                                                    <button type="submit" class="btn btn-outline-secondary mx-2">-</button>
+                                                </form>
                                                 <?= number_format($pesan['jumlah']); ?>
-                                                <a href="<?= site_url('kasir/penjualan/tambah_pesanan/' . $pesan['id_barang']) ?>" class="btn btn-outline-primary mx-1">+</a>
+                                                <form action="<?= site_url('kasir/penjualan/tambah_pesanan') ?>" method="POST">
+                                                    <input type="hidden" name="id_barang" value="<?= $pesan['id_barang']; ?>">
+                                                    <button type="submit" class="btn btn-primary mx-2">+</button>
+                                                </form>
                                             </td>
                                         </tr>
                                     <?php endforeach ?>
@@ -172,6 +178,7 @@
                                                                     <table class="table " id="cart-table">
                                                                         <?php if (isset($pesanan)) : ?>
                                                                         <tr>
+                                                                            <th>Thumbnail</th>
                                                                             <th>Barang</th>
                                                                             <th>Harga</th>
                                                                             <th>Jumlah</th>
@@ -179,6 +186,7 @@
                                                                         </tr>
                                                                            <?php foreach ($pesanan as $pesan) : ?>
                                                                                 <tr>
+                                                                                    <td><img src="<?= base_url('upload/barang/') . $pesan['thumbnail']; ?>" style="width: 50px;"></td>
                                                                                     <td><?= $pesan['nama']; ?></td>
                                                                                     <td><?= number_format($pesan['harga']); ?></td>
                                                                                     <td><?= number_format($pesan['jumlah']); ?></td>
@@ -200,6 +208,9 @@
                                                             <div class="card">
                                                                 <div class="card-body pt-3">
                                                                     <form action="<?= site_url('kasir/penjualan/transaksi') ?>" method="POST" class="">
+                                                                        <p class="alert alert-danger alert-dismissible fade show text-center" role="alert" style="display: none;" id="kurang" data-aos="zoom-in">
+                                                                              Uang pembayaran Kurang!
+                                                                        </p>
                                                                         <input type="hidden" id="total_harga" value="<?= $total_harga; ?>">
                                                                         <div>
                                                                             <label class="mx1 mb-2">Bayar</label>
@@ -242,10 +253,16 @@
       // Mendapatkan nilai tersembunyi "total_harga"
       var totalHarga = document.getElementById('total_harga').value;
 
+      // Konversi nilai menjadi tipe data numerik
+      bayarInput = parseFloat(bayarInput);
+      totalHarga = parseFloat(totalHarga);
+
       if (totalHarga > bayarInput) {
         document.getElementById('submit').disabled = true;
+        document.getElementById('kurang').style.display = 'block';
       } else {
         document.getElementById('submit').disabled = false;
+        document.getElementById('kurang').style.display = 'none';
       }
 
       // Jika nilai "Bayar" tidak kosong
@@ -260,7 +277,8 @@
         document.getElementById('kembalian').value = 0;
       }
     }
-  </script>
+</script>
+
   <script>
         // Menetapkan fokus ke elemen input dengan id "nama" saat halaman dimuat
         document.addEventListener("DOMContentLoaded", function() {

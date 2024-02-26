@@ -58,6 +58,7 @@ class Penjualan extends CI_Controller {
 							redirect('kasir/penjualan');
 						} else {
 							$item = [
+								'thumbnail' => $barang->thumbnail,
         						'id_barang' => $barang->id_barang,
         						'nama' 		=> $barang->nama,
         						'harga_beli'=> $barang->harga_beli,
@@ -75,7 +76,9 @@ class Penjualan extends CI_Controller {
 						$this->session->set_flashdata('stok_kurang', 'Stok barang kurang!');
 						redirect('kasir/penjualan');
 					} else {
+							
 						$item = [
+							'thumbnail' => $barang->thumbnail,
         					'id_barang' => $barang->id_barang,
         					'nama' 		=> $barang->nama,
         					'harga_beli'=> $barang->harga_beli,
@@ -222,8 +225,9 @@ class Penjualan extends CI_Controller {
 		redirect('kasir/penjualan');
 	}
 
-	public function kurang_pesanan($id_barang = null)
+	public function kurang_pesanan()
 	{
+		$id_barang = $this->input->post('id_barang');
 		$barang = $this->barang_model->get_by_id($id_barang);
 		$pesanan = $this->session->userdata('pesanan');
 		$sudah_ada = array_search($id_barang, array_column($pesanan, 'id_barang'));
@@ -231,6 +235,7 @@ class Penjualan extends CI_Controller {
 		if ($pesanan[$sudah_ada]['jumlah'] <= 1) {
 
 			unset($pesanan[$sudah_ada]);
+			$pesanan = array_values($pesanan);
 			
 			$total_harga = 0;
         	$total_jumlah= 0;
@@ -267,8 +272,9 @@ class Penjualan extends CI_Controller {
 		}		
 	}
 
-	public function tambah_pesanan($id_barang = null)
+	public function tambah_pesanan()
 	{
+		$id_barang = $this->input->post('id_barang');
 		$barang = $this->barang_model->get_by_id($id_barang);
 		$pesanan = $this->session->userdata('pesanan');
 		$sudah_ada = array_search($id_barang, array_column($pesanan, 'id_barang'));
